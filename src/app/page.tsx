@@ -38,7 +38,7 @@ export default function Home() {
           textAlign="center"
           size="2xl"
         >{`Ask GPT-3 where to go this weekend.`}</Heading>
-        <Image src="/cooking.svg" width={200} height={200} alt={"cooking"} />
+        <Image src="/travel.svg" width={200} height={200} alt={"travel"} />
         <Box h={4} />
         <Text
           alignSelf="start"
