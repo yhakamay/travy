@@ -36,8 +36,8 @@ export default function Home() {
         <Heading
           fontWeight="black"
           textAlign="center"
-          size="3xl"
-        >{`Ask AI what should you cook today.`}</Heading>
+          size="2xl"
+        >{`Ask GPT-3 where to go this weekend.`}</Heading>
         <Image src="/cooking.svg" width={200} height={200} alt={"cooking"} />
         <Box h={4} />
         <Text
