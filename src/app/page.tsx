@@ -65,6 +65,9 @@ export default function Home() {
           w="full"
           rightIcon={<BsFillArrowRightCircleFill />}
           isLoading={loading}
+          color="white"
+          bgColor="black"
+          _hover={{ bgColor: "gray.700" }}
         >
           Ask GPT-3
         </Button>
