@@ -7,27 +7,22 @@ import {
   Card,
   CardBody,
   Heading,
+  Input,
   Select,
-  Slider,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderTrack,
   Text,
   VStack,
 } from "./components/atoms/my_chakra_components";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { useState } from "react";
 import { ActivityType } from "./types/activity_type";
+import { SeasonType } from "./types/season_type";
 
 export default function Home() {
-  const [time, setTime] = useState(30);
-  const onTimeChange = (value: number) => setTime(value);
-  const [type, setType] = useState<ActivityType>("lunch");
-  const onTypeChange = (value: ActivityType) => setType(value);
-  const [generatedRecipe, setGeneratedRecipe] = useState<string>("");
+  const [city, setCity] = useState<string>("Tokyo");
+  const [activity, setActivity] = useState<ActivityType>("lunch");
+  const [season, setSeason] = useState<SeasonType>("spring");
+  const [suggestion, setSuggestion] = useState<string>("");
   const [loading, setLoading] = useState(false);
-
-  const prompt = `Generate a recipe for ${type} that takes ${time} minutes.`;
 
   return (
     <>
@@ -43,47 +38,40 @@ export default function Home() {
         <Text
           alignSelf="start"
           fontSize="lg"
-        >{`❶ How long can you take for cooking?`}</Text>
-        <Slider
-          min={10}
-          max={60}
-          step={10}
-          value={time}
-          onChange={onTimeChange}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb fontSize="sm" boxSize="32px">
-            {time}
-          </SliderThumb>
-        </Slider>
-        <Text alignSelf="end" fontSize="sm" color="grey">
-          min
-        </Text>
-        <Box h={4} />
-        <Text alignSelf="start" fontSize="lg">{`❷ Which meal?`}</Text>
+        >{`❶ Where are you going to go?`}</Text>
+        <Input value={city} onChange={(e) => setCity(e.target.value)} />
+        <Text alignSelf="start" fontSize="lg">{`❷ Which activity?`}</Text>
         <Select
-          value={type}
-          onChange={(e) => onTypeChange(e.target.value as ActivityType)}
+          value={activity}
+          onChange={(e) => setActivity(e.target.value as ActivityType)}
         >
           <option value="breakfast">Breakfast</option>
           <option value="lunch">Lunch</option>
           <option value="dinner">Dinner</option>
           <option value="sports">Sports</option>
         </Select>
+        <Text alignSelf="start" fontSize="lg">{`❷ When?`}</Text>
+        <Select
+          value={season}
+          onChange={(e) => setSeason(e.target.value as SeasonType)}
+        >
+          <option value="spring">Spring</option>
+          <option value="summer">Summer</option>
+          <option value="fall">Fall</option>
+          <option value="winter">Winter</option>
+        </Select>
         <Button
-          onClick={(e) => generateRecipe(e)}
+          onClick={(e) => suggestPlaces(e)}
           w="full"
           rightIcon={<BsFillArrowRightCircleFill />}
           isLoading={loading}
         >
-          Ask AI
+          Ask GPT-3
         </Button>
-        {generatedRecipe && (
-          <Card>
+        {suggestion && (
+          <Card w="full">
             <CardBody>
-              <Text>{generatedRecipe}</Text>
+              <Text>{suggestion}</Text>
             </CardBody>
           </Card>
         )}
@@ -91,20 +79,20 @@ export default function Home() {
     </>
   );
 
-  async function generateRecipe(e: any) {
+  async function suggestPlaces(e: any) {
     if (loading) {
       return;
     }
 
-    if (generatedRecipe) {
-      setGeneratedRecipe("");
+    if (suggestion) {
+      setSuggestion("");
     }
 
     e.preventDefault();
 
     setLoading(true);
 
-    console.log(prompt);
+    const prompt = `Suggest three places to go for ${activity} at ${city} in ${season}. Do not use bullet points.`;
 
     const res = await fetch("/api/generate", {
       method: "POST",
@@ -134,7 +122,7 @@ export default function Home() {
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
       const chunk = decoder.decode(value);
-      setGeneratedRecipe((prev) => prev + chunk);
+      setSuggestion((prev) => prev + chunk);
 
       console.log(chunk);
     }
