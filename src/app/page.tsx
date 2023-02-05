@@ -17,13 +17,13 @@ import {
 } from "./components/atoms/my_chakra_components";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { useState } from "react";
-import { MealType } from "./types/meal_type";
+import { ActivityType } from "./types/activity_type";
 
 export default function Home() {
   const [time, setTime] = useState(30);
   const onTimeChange = (value: number) => setTime(value);
-  const [type, setType] = useState<MealType>("lunch");
-  const onTypeChange = (value: MealType) => setType(value);
+  const [type, setType] = useState<ActivityType>("lunch");
+  const onTypeChange = (value: ActivityType) => setType(value);
   const [generatedRecipe, setGeneratedRecipe] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
@@ -65,11 +65,12 @@ export default function Home() {
         <Text alignSelf="start" fontSize="lg">{`❷ Which meal?`}</Text>
         <Select
           value={type}
-          onChange={(e) => onTypeChange(e.target.value as MealType)}
+          onChange={(e) => onTypeChange(e.target.value as ActivityType)}
         >
           <option value="breakfast">Breakfast</option>
           <option value="lunch">Lunch</option>
           <option value="dinner">Dinner</option>
+          <option value="sports">Sports</option>
         </Select>
         <Button
           onClick={(e) => generateRecipe(e)}
