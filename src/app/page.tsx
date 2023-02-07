@@ -33,10 +33,7 @@ export default function Home() {
         >{`Ask GPT-3 where to go this weekend.`}</Heading>
         <Image src="/travel.svg" width={200} height={200} alt={"travel"} />
         <Box h={4} />
-        <Text
-          alignSelf="start"
-          fontSize="lg"
-        >{`❶ Where are you going to go?`}</Text>
+        <Text alignSelf="start" fontSize="lg">{`❶ Where?`}</Text>
         <Input value={city} onChange={(e) => setCity(e.target.value)} />
         <Text alignSelf="start" fontSize="lg">{`❷ When?`}</Text>
         <Select
