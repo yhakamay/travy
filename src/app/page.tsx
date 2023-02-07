@@ -14,12 +14,10 @@ import {
 } from "./components/atoms/my_chakra_components";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { useState } from "react";
-import { ActivityType } from "./types/activity_type";
 import { SeasonType } from "./types/season_type";
 
 export default function Home() {
   const [city, setCity] = useState<string>("Tokyo");
-  const [activity, setActivity] = useState<ActivityType>("lunch");
   const [season, setSeason] = useState<SeasonType>("spring");
   const [suggestion, setSuggestion] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -40,16 +38,6 @@ export default function Home() {
           fontSize="lg"
         >{`❶ Where are you going to go?`}</Text>
         <Input value={city} onChange={(e) => setCity(e.target.value)} />
-        <Text alignSelf="start" fontSize="lg">{`❷ Which activity?`}</Text>
-        <Select
-          value={activity}
-          onChange={(e) => setActivity(e.target.value as ActivityType)}
-        >
-          <option value="breakfast">Breakfast</option>
-          <option value="lunch">Lunch</option>
-          <option value="dinner">Dinner</option>
-          <option value="sports">Sports</option>
-        </Select>
         <Text alignSelf="start" fontSize="lg">{`❷ When?`}</Text>
         <Select
           value={season}
