@@ -46,7 +46,7 @@ export default function Home() {
           <option value="winter">Winter</option>
         </Select>
         <Button
-          onClick={(e) => suggestPlaces(e)}
+          onClick={(e) => suggestPlan(e)}
           w="full"
           rightIcon={<BsFillArrowRightCircleFill />}
           isLoading={loading}
@@ -67,7 +67,7 @@ export default function Home() {
     </>
   );
 
-  async function suggestPlaces(e: any) {
+  async function suggestPlan(e: any) {
     if (loading) {
       return;
     }
