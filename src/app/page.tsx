@@ -68,8 +68,33 @@ export default function Home() {
         >
           Ask GPT-3
         </Button>
-        {lang === "ja" && (
+        {suggestion && (
           <Alert borderRadius="md">
+            <AlertIcon />
+            <VStack spacing="2" align="start">
+              <Text>
+                {lang === "en"
+                  ? "Check out TraPay to split the bill after your travel!"
+                  : "割り勘アプリ TraPay もあります。旅行の後に使ってみてね！"}
+              </Text>
+              <Link
+                href={
+                  lang === "en"
+                    ? "https://www.trapay.app/"
+                    : "https://www.trapay.app/ja"
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {lang === "en"
+                  ? "https://www.trapay.app/"
+                  : "https://www.trapay.app/ja"}
+              </Link>
+            </VStack>
+          </Alert>
+        )}
+        {lang === "ja" && (
+          <Alert borderRadius="md" status="warning">
             <AlertIcon />
             <VStack spacing="2" align="start">
               <Text>
