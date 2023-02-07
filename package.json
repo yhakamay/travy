@@ -22,6 +22,7 @@
     "eventsource-parser": "^0.1.0",
     "framer-motion": "^9.0.2",
     "next": "13.1.6",
+    "next-intl": "^2.10.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
