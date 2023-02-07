@@ -14,12 +14,10 @@ import {
 } from "./components/atoms/my_chakra_components";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { useState } from "react";
-import { ActivityType } from "./types/activity_type";
 import { SeasonType } from "./types/season_type";
 
 export default function Home() {
   const [city, setCity] = useState<string>("Tokyo");
-  const [activity, setActivity] = useState<ActivityType>("lunch");
   const [season, setSeason] = useState<SeasonType>("spring");
   const [suggestion, setSuggestion] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -35,21 +33,8 @@ export default function Home() {
         >{`Ask GPT-3 where to go this weekend.`}</Heading>
         <Image src="/travel.svg" width={200} height={200} alt={"travel"} />
         <Box h={4} />
-        <Text
-          alignSelf="start"
-          fontSize="lg"
-        >{`❶ Where are you going to go?`}</Text>
+        <Text alignSelf="start" fontSize="lg">{`❶ Where?`}</Text>
         <Input value={city} onChange={(e) => setCity(e.target.value)} />
-        <Text alignSelf="start" fontSize="lg">{`❷ Which activity?`}</Text>
-        <Select
-          value={activity}
-          onChange={(e) => setActivity(e.target.value as ActivityType)}
-        >
-          <option value="breakfast">Breakfast</option>
-          <option value="lunch">Lunch</option>
-          <option value="dinner">Dinner</option>
-          <option value="sports">Sports</option>
-        </Select>
         <Text alignSelf="start" fontSize="lg">{`❷ When?`}</Text>
         <Select
           value={season}
@@ -61,7 +46,7 @@ export default function Home() {
           <option value="winter">Winter</option>
         </Select>
         <Button
-          onClick={(e) => suggestPlaces(e)}
+          onClick={(e) => suggestPlan(e)}
           w="full"
           rightIcon={<BsFillArrowRightCircleFill />}
           isLoading={loading}
@@ -82,7 +67,7 @@ export default function Home() {
     </>
   );
 
-  async function suggestPlaces(e: any) {
+  async function suggestPlan(e: any) {
     if (loading) {
       return;
     }
@@ -95,7 +80,7 @@ export default function Home() {
 
     setLoading(true);
 
-    const prompt = `Suggest three places to go for ${activity} at ${city} in ${season}. Do not use bullet points.`;
+    const prompt = `Suggest a one-day travel plan at ${city} in ${season}. Do not use bullet points or numbers.`;
 
     const res = await fetch("/api/generate", {
       method: "POST",
@@ -126,8 +111,6 @@ export default function Home() {
       done = doneReading;
       const chunk = decoder.decode(value);
       setSuggestion((prev) => prev + chunk);
-
-      console.log(chunk);
     }
 
     setLoading(false);
