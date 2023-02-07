@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Card,
   CardBody,
   Heading,
   Input,
+  Link,
   Select,
   Text,
   VStack,
@@ -20,6 +23,7 @@ export default function Home() {
   const [city, setCity] = useState<string>("Tokyo");
   const [season, setSeason] = useState<SeasonType>("spring");
   const [suggestion, setSuggestion] = useState<string>("");
+  const [lang, setLang] = useState<"en" | "ja">("en");
   const [loading, setLoading] = useState(false);
 
   return (
@@ -45,6 +49,14 @@ export default function Home() {
           <option value="fall">Fall</option>
           <option value="winter">Winter</option>
         </Select>
+        <Text alignSelf="start" fontSize="lg">{`❸ Language?`}</Text>
+        <Select
+          value={lang}
+          onChange={(e) => setLang(e.target.value as "en" | "ja")}
+        >
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+        </Select>
         <Button
           onClick={(e) => suggestPlan(e)}
           w="full"
@@ -56,6 +68,24 @@ export default function Home() {
         >
           Ask GPT-3
         </Button>
+        {lang === "ja" && (
+          <Alert borderRadius="md">
+            <AlertIcon />
+            <VStack spacing="2" align="start">
+              <Text>
+                Next.js
+                のベータ機能を使用している関係で、アプリ全体を日本語にすることができません。妥協案として、回答だけを日本語にしてみました。詳しくはこちらをご覧ください
+              </Text>
+              <Link
+                href={"https://beta.nextjs.org/docs/app-directory-roadmap"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                https://beta.nextjs.org/docs/app-directory-roadmap
+              </Link>
+            </VStack>
+          </Alert>
+        )}
         {suggestion && (
           <Card w="full">
             <CardBody>
@@ -80,7 +110,7 @@ export default function Home() {
 
     setLoading(true);
 
-    const prompt = `Suggest a one-day travel plan at ${city} in ${season}. Do not use bullet points or numbers.`;
+    const prompt = `Suggest a one-day travel plan at ${city} in ${season}. Do not use bullet points or numbers. Please answer in ${lang}.`;
 
     const res = await fetch("/api/generate", {
       method: "POST",
