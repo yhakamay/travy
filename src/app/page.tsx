@@ -94,7 +94,7 @@ export default function Home() {
           </Alert>
         )}
         {lang === "ja" && (
-          <Alert borderRadius="md">
+          <Alert borderRadius="md" status="warning">
             <AlertIcon />
             <VStack spacing="2" align="start">
               <Text>
