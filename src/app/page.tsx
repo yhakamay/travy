@@ -80,7 +80,7 @@ export default function Home() {
 
     setLoading(true);
 
-    const prompt = `Suggest three places to go for ${activity} at ${city} in ${season}. Do not use bullet points.`;
+    const prompt = `Suggest a one-day travel plan at ${city} in ${season}. Do not use bullet points or numbers.`;
 
     const res = await fetch("/api/generate", {
       method: "POST",
