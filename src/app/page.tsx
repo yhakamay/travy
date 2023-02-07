@@ -111,8 +111,6 @@ export default function Home() {
       done = doneReading;
       const chunk = decoder.decode(value);
       setSuggestion((prev) => prev + chunk);
-
-      console.log(chunk);
     }
 
     setLoading(false);
